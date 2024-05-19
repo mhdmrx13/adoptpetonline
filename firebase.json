@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/adoptpetonline/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
