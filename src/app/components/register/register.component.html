@@ -1,0 +1,27 @@
+<h3>SignUp</h3>
+<form [formGroup]="registrationForm" (ngSubmit)="signup()">
+  <label for="email">Email</label>
+  <input name="email" id="email" type="email" formControlName="email">
+  <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+    <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</small>
+    <small *ngIf="registrationForm.get('email')?.errors?.['email']">Email is invalid.</small>
+  </div>
+
+  <label for="pwd">Password</label>
+  <input name="pwd" id="pwd" type="password" formControlName="pwd">
+  <div *ngIf="registrationForm.get('pwd')?.invalid && registrationForm.get('pwd')?.touched">
+    <small *ngIf="registrationForm.get('pwd')?.errors?.['required']">Password is required.</small>
+    <small *ngIf="registrationForm.get('pwd')?.errors?.['minlength']">Password must be at least 6 characters.</small>
+  </div>
+
+  <label for="cPwd">Confirm Password</label>
+  <input name="cPwd" id="cPwd" type="password" formControlName="cPwd">
+  <div *ngIf="registrationForm.get('cPwd')?.invalid && registrationForm.get('cPwd')?.touched">
+    <small *ngIf="registrationForm.get('cPwd')?.errors?.['required']">Confirm Password is required.</small>
+    <small *ngIf="registrationForm.get('cPwd')?.errors?.['minlength']">Confirm Password must be at least 6 characters.</small>
+  </div>
+
+  <button type="submit">Sign Up</button>
+</form>
+
+<a [routerLink]="['/forgotPassword']">Forgot password</a>
