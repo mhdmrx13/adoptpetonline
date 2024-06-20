@@ -1,0 +1,27 @@
+<div class="hero-section">
+  <video autoplay muted loop class="background-video">
+    <source src="../../../assets/pet4.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  <div class="hero-content">
+    <h1>Welcome to Adopt Me</h1>
+    <p>We help you find a loving home for your pets. Discover the perfect companion for you today.</p>
+    <button mat-raised-button color="accent" (click)="getStarted()">Get Started</button>
+  </div>
+</div>
+
+<div class="featured-section">
+  <h2>Pets</h2>
+  <div class="featured-container" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <mat-card *ngFor="let animal of featuredItems" class="featured-item">
+      <img mat-card-image [src]="animal.photos[0].medium" alt="Image of {{animal.name}}">
+      <mat-card-content>
+        <h3>{{animal.name}}</h3>
+        <p>{{animal.description}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-button color="primary" [href]="animal.url" target="_blank">Learn More</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

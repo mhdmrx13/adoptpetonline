@@ -1,27 +1,50 @@
-<h3>SignUp</h3>
-<form [formGroup]="registrationForm" (ngSubmit)="signup()">
-  <label for="email">Email</label>
-  <input name="email" id="email" type="email" formControlName="email">
-  <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
-    <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</small>
-    <small *ngIf="registrationForm.get('email')?.errors?.['email']">Email is invalid.</small>
-  </div>
+<h3>Sign Up</h3>
+<form [formGroup]="registrationForm" (ngSubmit)="signup()" class="registration-form">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Username</mat-label>
+    <input matInput id="userName" formControlName="userName" />
+    <mat-error *ngIf="registrationForm.get('userName')?.hasError('required')">
+      Username is required.
+    </mat-error>
+    <mat-error *ngIf="registrationForm.get('userName')?.hasError('minlength')">
+      Username must be at least 6 characters.
+    </mat-error>
+  </mat-form-field>
 
-  <label for="pwd">Password</label>
-  <input name="pwd" id="pwd" type="password" formControlName="pwd">
-  <div *ngIf="registrationForm.get('pwd')?.invalid && registrationForm.get('pwd')?.touched">
-    <small *ngIf="registrationForm.get('pwd')?.errors?.['required']">Password is required.</small>
-    <small *ngIf="registrationForm.get('pwd')?.errors?.['minlength']">Password must be at least 6 characters.</small>
-  </div>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput id="email" type="email" formControlName="email" />
+    <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+      Email is required.
+    </mat-error>
+    <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+      Email is invalid.
+    </mat-error>
+  </mat-form-field>
 
-  <label for="cPwd">Confirm Password</label>
-  <input name="cPwd" id="cPwd" type="password" formControlName="cPwd">
-  <div *ngIf="registrationForm.get('cPwd')?.invalid && registrationForm.get('cPwd')?.touched">
-    <small *ngIf="registrationForm.get('cPwd')?.errors?.['required']">Confirm Password is required.</small>
-    <small *ngIf="registrationForm.get('cPwd')?.errors?.['minlength']">Confirm Password must be at least 6 characters.</small>
-  </div>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Password</mat-label>
+    <input matInput id="pwd" type="password" formControlName="pwd" />
+    <mat-error *ngIf="registrationForm.get('pwd')?.hasError('required')">
+      Password is required.
+    </mat-error>
+    <mat-error *ngIf="registrationForm.get('pwd')?.hasError('minlength')">
+      Password must be at least 6 characters.
+    </mat-error>
+  </mat-form-field>
 
-  <button type="submit">Sign Up</button>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Confirm Password</mat-label>
+    <input matInput id="cPwd" type="password" formControlName="cPwd" />
+    <mat-error *ngIf="registrationForm.get('cPwd')?.hasError('required')">
+      Confirm Password is required.
+    </mat-error>
+    <mat-error *ngIf="registrationForm.get('cPwd')?.hasError('minlength')">
+      Confirm Password must be at least 6 characters.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Sign Up</button>
 </form>
 
-<a [routerLink]="['/forgotPassword']">Forgot password</a>
+<a mat-button color="accent" [routerLink]="['/login']">already have an account</a>

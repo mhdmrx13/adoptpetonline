@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="card-container">
+    <div class="card" *ngFor="let animal of adoptedPets">
+      <div class="card-image">
+        <img *ngIf="animal['photos'].length > 0" src="{{animal['photos'][0].small}}" alt="{{animal['description']}}">
+        <img *ngIf="animal['photos'].length == 0" src="../../../assets/pet3.jpg" alt="">
+        <button mat-icon-button class="adopt-button" [ngClass]="{'adopted': isAdopted(animal)}" (click)="adoptPet(animal)">
+          <mat-icon>{{ isAdopted(animal) ? 'pets' : 'pets_outline' }}</mat-icon>
+        </button>
+      </div>
+      <div class="card-content">
+        <h3>{{ animal['name']}}</h3>
+        <p>{{ animal['description'] }}</p>
+        <a mat-button color="accent" href="{{animal['url']}}" target="_blank">Learn more</a>
+      </div>
+    </div>
+  </div>
+</div>

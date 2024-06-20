@@ -1,0 +1,50 @@
+<div class="container">
+  <aside class="filter-sidebar">
+    <h3>Filter</h3>
+    <mat-form-field>
+      <mat-label>Types</mat-label>
+      <mat-select [formControl]="type_selected">
+        <mat-option value="">None</mat-option>
+        <mat-option *ngFor="let type of types" [value]="type.name" (click)="getBreeds(type._links.breeds.href)">
+          {{ type.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="type_selected.value">
+      <mat-label>Breeds</mat-label>
+      <mat-select [formControl]="breed_selected">
+        <mat-option value="">None</mat-option>
+        <mat-option *ngFor="let breed of breeds" [value]="breed.name">{{ breed.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="type_selected.value">
+      <mat-label>Genders</mat-label>
+      <mat-select [formControl]="gender_selected">
+        <mat-option *ngFor="let gender of genders" [value]="gender">{{ gender }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="filter()">Apply Filters</button>
+  </aside>
+
+  <main class="card-container">
+    <div class="card" *ngFor="let animal of animals">
+      <div class="card-image">
+        <img [src]="animal.photos.length ? animal.photos[0].medium : '../../../assets/pet1.jpg'" [alt]="animal.name" />
+        <button mat-icon-button class="adopt-button" [ngClass]="{'adopted': isAdopted(animal)}" (click)="adoptPet(animal)">
+          <mat-icon>{{ isAdopted(animal) ? 'pets' : 'pets_outline' }}</mat-icon>
+        </button>
+      </div>
+      <div class="card-content">
+        <h3>{{ animal.name }}</h3>
+        <p>{{ animal.description | slice:0:100 }}...</p>
+        <a mat-button color="accent" href="{{ animal.url }}" target="_blank">Learn more</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="pagination-container">
+  <mat-paginator [length]="ResponseAnimals?.pagination?.total_count" [pageSize]="ResponseAnimals?.pagination?.count_per_page"
+    (page)="handlePageEvent($event)" aria-label="Select page">
+  </mat-paginator>
+</div>

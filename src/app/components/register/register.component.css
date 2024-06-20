@@ -1,0 +1,26 @@
+.registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  h3 {
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 16px;
+  }
+  
+  a {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+  }
+  

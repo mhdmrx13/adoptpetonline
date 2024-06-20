@@ -1,0 +1,28 @@
+<mat-toolbar color="primary" >
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Let's Adopt</span>
+  <span class="spacer"></span>
+  <img src="../../../assets/adoptIcon.png" alt="Site Logo" class="site-logo">
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #profileMenu="matMenu">
+  <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+    <button mat-menu-item>
+      <span>{{ user?.email }}</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <span>Logout</span>
+    </button>
+  </ng-container>
+  <ng-template #notLoggedIn>
+    <button mat-menu-item (click)="redirectToLogin()">
+      <span>Login</span>
+    </button>
+  </ng-template>
+</mat-menu>
