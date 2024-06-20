@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Animal } from '../../interfaces/animal';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class ApiService {
   private oAuthUrl = '/v2/oauth2/token';
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private firestore: AngularFirestore, private afAuth: AngularFireAuth) {}
 
   authenticate(): Observable<any> {
     const body = {
@@ -61,6 +63,43 @@ export class ApiService {
       'Authorization': `Bearer ${this.accessToken}`
     });
     return this.http.get<any>(`${this.apiUrl}${breedUrl}`, { headers });
+  }
+
+  addUserPet(animal: Animal): Promise<void> {
+    return this.afAuth.currentUser.then(user => {
+      if (user) {
+        const userId = user.uid;
+        return this.firestore.collection('users').doc(userId).collection('selectedPets').doc(animal.id.toString()).set(animal);
+      } else {
+        throw new Error('User not authenticated');
+      }
+    });
+  }
+
+  removeUserPet(animalId: string): Promise<void> {
+    return this.afAuth.currentUser.then(user => {
+      if (user) {
+        const userId = user.uid;
+        return this.firestore.collection('users').doc(userId).collection('selectedPets').doc(animalId).delete();
+      } else {
+        throw new Error('User not authenticated');
+      }
+    });
+  }
+
+  getUserPets(): Observable<Animal[]> {
+    return new Observable<Animal[]>(observer => {
+      this.afAuth.currentUser.then(user => {
+        if (user) {
+          const userId = user.uid;
+          this.firestore.collection('users').doc(userId).collection('selectedPets').valueChanges().subscribe((pets: any) => {
+            observer.next(pets as Animal[]);
+          });
+        } else {
+          observer.next([]);
+        }
+      });
+    });
   }
 
 }
